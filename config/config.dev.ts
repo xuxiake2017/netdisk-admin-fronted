@@ -12,4 +12,10 @@ export default defineConfig({
     babelPlugins: [],
     babelOptions: {},
   },
+  proxy: {
+    '/admin': {
+      target: 'http://192.168.5.237:8300/',
+      changeOrigin: true,
+    },
+  },
 });
