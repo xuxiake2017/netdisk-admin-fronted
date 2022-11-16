@@ -319,15 +319,34 @@ export default defineConfig({
         },
         {
           name: 'sysLog',
-          icon: 'smile',
           path: '/logManage/sysLog',
           component: './logManage/sysLog',
         },
         {
           name: 'smsLog',
-          icon: 'smile',
           path: '/logManage/smsLog',
           component: './logManage/smsLog',
+        },
+      ],
+    },
+    {
+      path: '/userManage',
+      icon: 'user',
+      name: 'userManage',
+      routes: [
+        {
+          path: '/userManage',
+          redirect: '/userManage/userList',
+        },
+        {
+          name: 'userList',
+          path: '/userManage/userList',
+          component: './userManage/userList',
+        },
+        {
+          name: 'wechatUserList',
+          path: '/userManage/wechatUserList',
+          component: './userManage/wechatUserList',
         },
       ],
     },
@@ -345,8 +364,8 @@ export default defineConfig({
     // 如果不想要 configProvide 动态设置主题需要把这个设置为 default
     // 只有设置为 variable， 才能使用 configProvide 动态设置主色调
     // https://ant.design/docs/react/customize-theme-variable-cn
-    'root-entry-name': 'default',
-    '@primary-color': '#FA541C',
+    // 'root-entry-name': 'default',
+    '@blue-6': '#FA541C',
   },
   // esbuild is father build tools
   // https://umijs.org/plugins/plugin-esbuild

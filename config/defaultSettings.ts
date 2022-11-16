@@ -5,7 +5,7 @@ const Settings: LayoutSettings & {
   logo?: string;
 } = {
   navTheme: 'dark',
-  primaryColor: '#1890ff',
+  primaryColor: '#FA541C',
   layout: 'mix',
   contentWidth: 'Fluid',
   fixedHeader: false,

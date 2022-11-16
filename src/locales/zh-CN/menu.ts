@@ -53,4 +53,7 @@ export default {
   'menu.logManage': '日志管理',
   'menu.logManage.sysLog': '系统日志',
   'menu.logManage.smsLog': '短信日志',
+  'menu.userManage': '用户管理',
+  'menu.userManage.userList': '用户管理',
+  'menu.userManage.wechatUserList': '微信用户管理',
 };

@@ -114,7 +114,7 @@ const TableList: React.FC = () => {
       <ProTable<SysLog, SysLogQueryParams>
         headerTitle="查询表格"
         actionRef={actionRef}
-        rowKey="key"
+        rowKey="id"
         search={{
           labelWidth: 120,
         }}

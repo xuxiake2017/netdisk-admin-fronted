@@ -46,3 +46,18 @@ export const LogTypeMap = {
   [LogType.LOGOUT]: '登出',
   [LogType.REGISTER]: '注册',
 };
+
+/**
+ * 通用数据状态：0正常 1已删除
+ */
+export enum CommonDataStatus {
+  /** 正常 */
+  Normal = 0,
+  /** 已删除 */
+  Deleted = 1,
+}
+
+export const CommonDataStatusMap = {
+  [CommonDataStatus.Normal]: '正常',
+  [CommonDataStatus.Deleted]: '已删除',
+};

@@ -14,7 +14,7 @@ export default defineConfig({
   },
   proxy: {
     '/admin': {
-      target: 'http://192.168.5.237:8300/',
+      target: 'http://192.168.5.213:8300/',
       changeOrigin: true,
     },
   },
