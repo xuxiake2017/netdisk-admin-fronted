@@ -398,4 +398,8 @@ export default defineConfig({
   // mfsu: {},
   webpack5: {},
   exportStatic: {},
+  publicPath: '/admin/',
+  history: {
+    type: 'hash',
+  },
 });

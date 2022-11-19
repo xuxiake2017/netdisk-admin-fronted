@@ -1,0 +1,6 @@
+netdisk-admin-fronted:
+  build: ./
+  volumes:
+   - ./nginx.conf:/etc/nginx/nginx.conf
+  ports:
+   - "8888:80"
