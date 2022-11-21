@@ -68,7 +68,7 @@ const Login: React.FC = () => {
       </div>
       <div className={styles.content}>
         <LoginForm<LoginParams>
-          logo={<img alt="logo" src="/logo.svg" />}
+          logo={<img alt="logo" src={`${publicPath}/logo.svg`} />}
           title="Netdisk Admin"
           subTitle="Netdisk Admin后台管理系统"
           initialValues={{

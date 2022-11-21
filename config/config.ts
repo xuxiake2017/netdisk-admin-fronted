@@ -402,4 +402,5 @@ export default defineConfig({
   history: {
     type: 'hash',
   },
+  runtimePublicPath: true,
 });
