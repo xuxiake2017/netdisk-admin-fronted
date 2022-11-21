@@ -79,5 +79,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       return <>{children}</>;
     },
     ...initialState?.settings,
+    logo: `${publicPath}logo.svg`,
   };
 };
