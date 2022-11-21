@@ -1,4 +1,4 @@
-netdisk-admin-fronted:
+web:
   build: ./
   volumes:
    - ./nginx.conf:/etc/nginx/nginx.conf
