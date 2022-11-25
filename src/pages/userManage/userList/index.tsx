@@ -98,20 +98,11 @@ const TableList: React.FC = () => {
         return (
           <Space>
             <Progress
-              height={46}
+              height={25}
               width={120}
               percent={entity.usedMemory / entity.totalMemory}
               color="#FF9743"
-              forceFit
-              size={8}
-              marker={[
-                {
-                  value: entity.usedMemory / entity.totalMemory,
-                  style: {
-                    stroke: '#FF9743',
-                  },
-                },
-              ]}
+              barWidthRatio={0.5}
             />
             <span>
               {formatByte(entity.usedMemory)}/{formatByte(entity.totalMemory)}
