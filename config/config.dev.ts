@@ -13,7 +13,7 @@ export default defineConfig({
     babelOptions: {},
   },
   proxy: {
-    '/admin': {
+    '/netdisk-admin': {
       target: 'http://192.168.5.213:8300/',
       changeOrigin: true,
     },

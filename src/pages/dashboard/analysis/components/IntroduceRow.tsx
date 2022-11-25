@@ -1,13 +1,14 @@
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { TinyArea, TinyColumn, Progress } from '@ant-design/charts';
+import { TinyArea, TinyColumn } from '@ant-design/charts';
 import { Col, Row, Tooltip } from 'antd';
 
 import numeral from 'numeral';
 import { ChartCard, Field } from './Charts';
-import type { DataItem } from '../data.d';
 import Trend from './Trend';
-import Yuan from '../utils/Yuan';
 import styles from '../style.less';
+
+import type { CardData } from '@/services/dashBoard/typings';
+import { useMemo } from 'react';
 
 const topColResponsiveProps = {
   xs: 24,
@@ -18,118 +19,152 @@ const topColResponsiveProps = {
   style: { marginBottom: 24 },
 };
 
-const IntroduceRow = ({ loading, visitData }: { loading: boolean; visitData: DataItem[] }) => (
-  <Row gutter={24}>
-    <Col {...topColResponsiveProps}>
-      <ChartCard
-        bordered={false}
-        title="总销售额"
-        action={
-          <Tooltip title="指标说明">
-            <InfoCircleOutlined />
-          </Tooltip>
-        }
-        loading={loading}
-        total={() => <Yuan>126560</Yuan>}
-        footer={<Field label="日销售额" value={`￥${numeral(12423).format('0,0')}`} />}
-        contentHeight={46}
-      >
-        <Trend flag="up" style={{ marginRight: 16 }}>
-          周同比
-          <span className={styles.trendText}>12%</span>
-        </Trend>
-        <Trend flag="down">
-          日同比
-          <span className={styles.trendText}>11%</span>
-        </Trend>
-      </ChartCard>
-    </Col>
+const IntroduceRow = ({ loading, cardData }: { loading: boolean; cardData?: CardData }) => {
+  const dayMom = useMemo(() => {
+    if (cardData?.userMomData.todayIncreasedUserNum && cardData?.userMomData.dayMomData) {
+      return Number(
+        Number(
+          ((cardData.userMomData.todayIncreasedUserNum - cardData.userMomData.dayMomData) /
+            cardData.userMomData.dayMomData) *
+            100,
+        ).toFixed(1),
+      );
+    }
+    return 0;
+  }, [cardData?.userMomData.todayIncreasedUserNum, cardData?.userMomData.dayMomData]);
+  const weekMom = useMemo(() => {
+    if (cardData?.userMomData.currentWeekIncreasedUserNum && cardData?.userMomData.weekMomData) {
+      return Number(
+        Number(
+          ((cardData.userMomData.currentWeekIncreasedUserNum - cardData.userMomData.weekMomData) /
+            cardData.userMomData.weekMomData) *
+            100,
+        ).toFixed(1),
+      );
+    }
+    return 0;
+  }, [cardData?.userMomData.currentWeekIncreasedUserNum, cardData?.userMomData.weekMomData]);
+  return (
+    <Row gutter={24}>
+      <Col {...topColResponsiveProps}>
+        <ChartCard
+          bordered={false}
+          title="日新增用户"
+          loading={loading}
+          total={() => cardData?.userMomData.todayIncreasedUserNum || 0}
+          footer={<Field label="总用户数" value={cardData?.userMomData.totalUserNum || 0} />}
+          contentHeight={46}
+        >
+          <Trend flag={weekMom > 0 ? 'up' : 'down'} style={{ marginRight: 16 }}>
+            周环比
+            <span className={styles.trendText}>{weekMom}%</span>
+          </Trend>
+          <Trend flag={dayMom > 0 ? 'up' : 'down'}>
+            日环比
+            <span className={styles.trendText}>{dayMom}%</span>
+          </Trend>
+        </ChartCard>
+      </Col>
 
-    <Col {...topColResponsiveProps}>
-      <ChartCard
-        bordered={false}
-        loading={loading}
-        title="访问量"
-        action={
-          <Tooltip title="指标说明">
-            <InfoCircleOutlined />
-          </Tooltip>
-        }
-        total={numeral(8846).format('0,0')}
-        footer={<Field label="日访问量" value={numeral(1234).format('0,0')} />}
-        contentHeight={46}
-      >
-        <TinyArea
-          color="#975FE4"
-          xField="x"
-          height={46}
-          forceFit
-          yField="y"
-          smooth
-          data={visitData}
-        />
-      </ChartCard>
-    </Col>
-    <Col {...topColResponsiveProps}>
-      <ChartCard
-        bordered={false}
-        loading={loading}
-        title="支付笔数"
-        action={
-          <Tooltip title="指标说明">
-            <InfoCircleOutlined />
-          </Tooltip>
-        }
-        total={numeral(6560).format('0,0')}
-        footer={<Field label="转化率" value="60%" />}
-        contentHeight={46}
-      >
-        <TinyColumn xField="x" height={46} forceFit yField="y" data={visitData} />
-      </ChartCard>
-    </Col>
-    <Col {...topColResponsiveProps}>
-      <ChartCard
-        loading={loading}
-        bordered={false}
-        title="运营活动效果"
-        action={
-          <Tooltip title="指标说明">
-            <InfoCircleOutlined />
-          </Tooltip>
-        }
-        total="78%"
-        footer={
-          <div style={{ whiteSpace: 'nowrap', overflow: 'hidden' }}>
-            <Trend flag="up" style={{ marginRight: 16 }}>
-              周同比
-              <span className={styles.trendText}>12%</span>
-            </Trend>
-            <Trend flag="down">
-              日同比
-              <span className={styles.trendText}>11%</span>
-            </Trend>
-          </div>
-        }
-        contentHeight={46}
-      >
-        <Progress
-          height={46}
-          percent={0.78}
-          color="#13C2C2"
-          forceFit
-          size={8}
-          marker={[
-            {
-              value: 0.8,
-              style: {
-                stroke: '#13C2C2',
+      <Col {...topColResponsiveProps}>
+        <ChartCard
+          bordered={false}
+          loading={loading}
+          title="短信发送数"
+          action={
+            <Tooltip title="近一个月的短信发送数">
+              <InfoCircleOutlined />
+            </Tooltip>
+          }
+          total={numeral(cardData?.smsSendData.currentMonthSendNum || 0).format('0,0')}
+          footer={
+            <Field
+              label="日发送量"
+              value={numeral(cardData?.smsSendData.todaySendNum || 0).format('0,0')}
+            />
+          }
+          contentHeight={46}
+        >
+          <TinyArea
+            color="#e0cff7"
+            pattern={{
+              type: 'line',
+              cfg: {
+                stroke: '#975FE4',
               },
-            },
-          ]}
-        />
-      </ChartCard>
-    </Col>
-  </Row>
-);
+            }}
+            line={{
+              color: '#975FE4',
+            }}
+            height={46}
+            smooth
+            data={cardData?.smsSendData.statisticsData.map((item) => item.count) || []}
+          />
+        </ChartCard>
+      </Col>
+      <Col {...topColResponsiveProps}>
+        <ChartCard
+          bordered={false}
+          loading={loading}
+          title="访问量"
+          action={
+            <Tooltip title="近一个月的访问量">
+              <InfoCircleOutlined />
+            </Tooltip>
+          }
+          total={numeral(cardData?.pvData.currentMonthPVNum || 0).format('0,0')}
+          footer={
+            <Field
+              label="日访问量"
+              value={numeral(cardData?.pvData.todayPVNum || 0).format('0,0')}
+            />
+          }
+          contentHeight={46}
+        >
+          <TinyArea
+            color="#e0cff7"
+            pattern={{
+              type: 'line',
+              cfg: {
+                stroke: '#975FE4',
+              },
+            }}
+            line={{
+              color: '#975FE4',
+            }}
+            height={46}
+            smooth
+            data={cardData?.pvData.statisticsData.map((item) => item.count) || []}
+          />
+        </ChartCard>
+      </Col>
+      <Col {...topColResponsiveProps}>
+        <ChartCard
+          bordered={false}
+          loading={loading}
+          title="上传数量"
+          action={
+            <Tooltip title="近一个月的上传数量">
+              <InfoCircleOutlined />
+            </Tooltip>
+          }
+          total={numeral(cardData?.uploadData.currentMonthUploadNum).format('0,0')}
+          footer={
+            <Field
+              label="日上传数量"
+              value={numeral(cardData?.uploadData.todayUploadNum || 0).format('0,0')}
+            />
+          }
+          contentHeight={46}
+        >
+          <TinyColumn
+            height={46}
+            data={cardData?.uploadData.statisticsData.map((item) => item.count) || []}
+          />
+        </ChartCard>
+      </Col>
+    </Row>
+  );
+};
 
 export default IntroduceRow;
