@@ -1,10 +1,10 @@
-# Ant Design Pro
+# Netdisk Admin
 
-This project is initialized with [Ant Design Pro](https://pro.ant.design). Follow is the quick guide for how to use.
+这个项目是 [x-netdisk](https://github.com/xuxiake2017/x-netdisk) 的后台管理页面
 
-## Environment Prepare
+## 环境准备
 
-Install `node_modules`:
+安装依赖
 
 ```bash
 npm install
@@ -16,47 +16,20 @@ or
 yarn
 ```
 
-## Provided Scripts
-
-Ant Design Pro provides some useful script to help you quick start and build with web project, code style check and test.
-
-Scripts provided in `package.json`. It's safe to modify or add additional script:
-
-### Start project
+### 开始项目
 
 ```bash
 npm start
 ```
 
-### Build project
+### 打包
 
 ```bash
 npm run build
 ```
 
-### Check code style
+### 使用 Docker
 
-```bash
-npm run lint
-```
-
-You can also use script to auto fix some lint error:
-
-```bash
-npm run lint:fix
-```
-
-### Test code
-
-```bash
-npm test
-```
-
-### 使用Docker
 ```bash
 $ docker-compose up -d
 ```
-
-## More
-
-You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in our [github](https://github.com/ant-design/ant-design-pro).
