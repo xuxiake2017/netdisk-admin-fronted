@@ -1,0 +1,17 @@
+node_modules
+dist
+.git
+.gitignore
+.husky
+.idea
+.vscode
+coverage
+playwright-report
+test-results
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+Dockerfile
+docker-compose.yml
+README.md
